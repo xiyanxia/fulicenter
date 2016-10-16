@@ -3,8 +3,8 @@ package com.example.fulicenter.utils;
 import android.app.Activity;
 import android.content.Intent;
 
-import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.activity.MainActivity;
+import com.example.fulicenter.Activity.MainActivity;
+import com.example.fulicenter.R;
 
 
 public class MFGT {
