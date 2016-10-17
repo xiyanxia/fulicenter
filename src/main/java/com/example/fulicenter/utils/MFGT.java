@@ -3,14 +3,14 @@ package com.example.fulicenter.utils;
 import android.app.Activity;
 import android.content.Intent;
 
-import cn.ucai.fulicenter.R;
-import cn.ucai.fulicenter.activity.MainActivity;
+import com.example.fulicenter.Activity.MainActivity;
+import com.example.fulicenter.R;
 
 
 public class MFGT {
     public static void finish(Activity activity){
         activity.finish();
-        activity.overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+        activity.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
     }
     public static void gotoMainActivity(Activity context){
         startActivity(context, MainActivity.class);
