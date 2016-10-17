@@ -1,9 +1,13 @@
-package com.example.fulicenter.utils;
+package com.example.fulicenter.net;
 
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
+import com.example.fulicenter.I;
+import com.example.fulicenter.bean.Result;
+import com.example.fulicenter.utils.FuLiCenterApplication;
+import com.example.fulicenter.utils.L;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -19,9 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import cn.ucai.fulicenter.FuLiCenterApplication;
-import cn.ucai.fulicenter.I;
-import cn.ucai.fulicenter.bean.Result;
 import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -144,7 +145,7 @@ public class OkHttpUtils<T> {
 
 
     private void initHandler() {
-        mHandler = new Handler(FuLiCenterApplication.applicationContext.getMainLooper()) {
+        mHandler = new Handler(FuLiCenterApplication.getInstance().getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
