@@ -13,12 +13,12 @@ import com.example.fulicenter.utils.MFGT;
 public class SplashActivity extends AppCompatActivity {
     private final long st = 3000;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
 
     protected void onStart() {
         super.onStart();
