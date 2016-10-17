@@ -7,6 +7,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.fulicenter.R;
+import com.example.fulicenter.utils.L;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        L.i("Mainactivity onCreate");
         ButterKnife.bind(this);
         initView();
     }
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRadioButtonStatus() {
+        L.e("index"+index);
         for (int i=0;i<b.length;i++){
             if (i==index){
                 b[i].setChecked(true);
