@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.winston.myapplication.R;
-import com.example.winston.myapplication.bean.BoutiqueBean;
-import com.example.winston.myapplication.utils.ImageLoader;
-import com.example.winston.myapplication.utils.MFGT;
+import com.example.sty.R;
+import com.example.sty.bean.BoutiqueBean;
+import com.example.sty.utils.ImageLoader;
+import com.example.sty.utils.MFGT;
 
 import java.util.ArrayList;
 
