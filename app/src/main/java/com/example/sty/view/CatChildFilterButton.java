@@ -17,14 +17,15 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.winston.myapplication.I;
-import com.example.winston.myapplication.R;
-import com.example.winston.myapplication.activity.CategoryChildActivity;
-import com.example.winston.myapplication.bean.CategoryChildBean;
-import com.example.winston.myapplication.utils.ConvertUtils;
-import com.example.winston.myapplication.utils.ImageLoader;
+import com.example.sty.I;
+import com.example.sty.R;
+import com.example.sty.activity.CategoryChildActivity;
+import com.example.sty.bean.CategoryChildBean;
+import com.example.sty.utils.ConvertUtils;
+import com.example.sty.utils.ImageLoader;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by Winston on 2016/10/20.
