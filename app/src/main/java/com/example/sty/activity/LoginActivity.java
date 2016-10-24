@@ -13,6 +13,7 @@ import com.example.sty.I;
 
 import com.example.sty.bean.Result;
 import com.example.sty.bean.User;
+import com.example.sty.dao.SharePrefrenceUtils;
 import com.example.sty.dao.UserDao;
 import com.example.sty.net.NetDao;
 import com.example.sty.net.OkHttpUtils;
@@ -108,6 +109,7 @@ public class LoginActivity extends BaseActivity {
                         UserDao dao=new UserDao(mContext);
                         boolean isSuccess=dao.saveUser(user);
                         if (isSuccess){
+                            SharePrefrenceUtils.getInstence(mContext).saveUser(user.getMuserName());
                             FuLiCenterApplication.setUser(user);
                         }else {
                             CommonUtils.showLongToast(R.string.user_database_error);
