@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.sty.FuLiCenterApplication;
 import com.example.sty.R;
 import com.example.sty.fragment.BoutiqueFragment;
 import com.example.sty.fragment.CategoryFragment;
 import com.example.sty.fragment.NewGoodsFragment;
+import com.example.sty.fragment.PersonalCenterFragment;
 import com.example.sty.utils.L;
 
 import butterknife.BindView;
@@ -38,6 +40,7 @@ public class MainActivity extends BaseActivity {
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mcategoryFragment;
+    PersonalCenterFragment mPersonalCenterFragment;
 
 
     @Override
@@ -52,8 +55,12 @@ public class MainActivity extends BaseActivity {
         mFragments = new Fragment[5];
         mNewGoodsFragment = new NewGoodsFragment();
         mBoutiqueFragment = new BoutiqueFragment();
+        mcategoryFragment=new CategoryFragment();
+        mPersonalCenterFragment=new PersonalCenterFragment();
         mFragments[0] = mNewGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
+        mFragments[2]=mcategoryFragment;
+        mFragments[4]=mPersonalCenterFragment;
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container,mNewGoodsFragment)
@@ -100,8 +107,11 @@ public class MainActivity extends BaseActivity {
                 index = 3;
                 break;
             case R.id.layout_personal_center:
-                index = 4;
-                break;
+                if (FuLiCenterApplication.getUser()==null) {
+//                    MFGT.gotoLogin(this);
+                }else {
+                    index = 4;
+                }break;
         }
         setFragment();
     }
