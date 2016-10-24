@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.sty.FuLiCenterApplication;
 import com.example.sty.R;
 import com.example.sty.I;
 
 import com.example.sty.bean.Result;
 import com.example.sty.bean.User;
+import com.example.sty.dao.UserDao;
 import com.example.sty.net.NetDao;
 import com.example.sty.net.OkHttpUtils;
 import com.example.sty.utils.CommonUtils;
@@ -95,14 +98,20 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(String s) {
                 Result result=ResultUtils.getResultFromJson(s, User.class);
-
                 L.e(TAG,"result="+result);
                 if(result==null){
                     CommonUtils.showLongToast(R.string.login_fail);
                 }else{
                     if(result.isRetMsg()){
-                        I.User user = (I.User) result.getRetData();
+                        User user = (User) result.getRetData();
                         L.e(TAG,"user="+user);
+                        UserDao dao=new UserDao(mContext);
+                        boolean isSuccess=dao.saveUser(user);
+                        if (isSuccess){
+                            FuLiCenterApplication.setUser(user);
+                        }else {
+                            CommonUtils.showLongToast(R.string.user_database_error);
+                        }
                         MFGT.finish(mContext);
                     }else{
                         if(result.getRetCode()==I.MSG_LOGIN_UNKNOW_USER){
