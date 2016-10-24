@@ -14,6 +14,7 @@ import com.example.sty.fragment.CategoryFragment;
 import com.example.sty.fragment.NewGoodsFragment;
 import com.example.sty.fragment.PersonalCenterFragment;
 import com.example.sty.utils.L;
+import com.example.sty.utils.MFGT;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -108,7 +109,7 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.layout_personal_center:
                 if (FuLiCenterApplication.getUser()==null) {
-//                    MFGT.gotoLogin(this);
+                    MFGT.gotoLogin(this);
                 }else {
                     index = 4;
                 }break;
@@ -141,5 +142,14 @@ public class MainActivity extends BaseActivity {
     }
     public void onBackPressed(){
         finish();
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (FuLiCenterApplication.getUser()!=null
+                && ){
+            index=4;
+        }
+        setFragment();
     }
 }
