@@ -6,15 +6,17 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-
-import com.example.sty.I;
 import com.example.sty.R;
+import com.example.sty.I;
+
 import com.example.sty.bean.Result;
+import com.example.sty.bean.User;
 import com.example.sty.net.NetDao;
 import com.example.sty.net.OkHttpUtils;
 import com.example.sty.utils.CommonUtils;
 import com.example.sty.utils.L;
 import com.example.sty.utils.MFGT;
+import com.example.sty.utils.ResultUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,10 +90,12 @@ public class LoginActivity extends BaseActivity {
         pd.setMessage(getResources().getString(R.string.logining));
         pd.show();
         L.e(TAG,"username="+username+",password="+password);
-        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<Result>() {
+        NetDao.login(mContext, username, password,
+                new OkHttpUtils.OnCompleteListener<String>() {
             @Override
-            public void onSuccess(Result result) {
-                pd.dismiss();
+            public void onSuccess(String s) {
+                Result result=ResultUtils.getResultFromJson(s, User.class);
+
                 L.e(TAG,"result="+result);
                 if(result==null){
                     CommonUtils.showLongToast(R.string.login_fail);
@@ -110,6 +114,7 @@ public class LoginActivity extends BaseActivity {
                         }
                     }
                 }
+                pd.dismiss();
             }
 
             @Override

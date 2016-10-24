@@ -8,6 +8,8 @@ import com.example.sty.bean.CategoryChildBean;
 import com.example.sty.bean.CategoryGroupBean;
 import com.example.sty.bean.GoodsDetailsBean;
 import com.example.sty.bean.NewGoodsBean;
+import com.example.sty.bean.Result;
+import com.example.sty.utils.MD5;
 
 
 /**
@@ -60,6 +62,24 @@ public class NetDao {
                 .addParam(I.PAGE_ID,String.valueOf(pageId))
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(NewGoodsBean[].class)
+                .execute(listener);
+    }
+    public static void register(Context context, String username, String nickname, String password, OkHttpUtils.OnCompleteListener<Result> listener){
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_REGISTER)
+                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.NICK,nickname)
+                .addParam(I.User.PASSWORD, MD5.getMessageDigest(password))
+                .targetClass(Result.class)
+                .post()
+                .execute(listener);
+    }
+    public static void login(Context context, String username, String password, OkHttpUtils.OnCompleteListener<String> listener){
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_LOGIN)
+                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.PASSWORD,MD5.getMessageDigest(password))
+                .targetClass(String.class)
                 .execute(listener);
     }
 }
