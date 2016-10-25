@@ -15,6 +15,7 @@ import com.example.sty.R;
 import com.example.sty.activity.MainActivity;
 import com.example.sty.bean.User;
 import com.example.sty.utils.ImageLoader;
+import com.example.sty.utils.L;
 import com.example.sty.utils.MFGT;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class PersonalCenterFragment extends BaseFragment {
     TextView mTvUserName;
 
     MainActivity mContext;
+    User user = null;
 
     @BindView(R.id.center_user_order_lis)
     GridView mCenterUserOrderLis;
@@ -57,7 +59,8 @@ public class PersonalCenterFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        User user =FuLiCenterApplication.getUser();
+
+        user = FuLiCenterApplication.getUser();
         if (user==null){
             MFGT.gotoLogin(mContext);
         }else {
@@ -99,4 +102,15 @@ public class PersonalCenterFragment extends BaseFragment {
                 new String[]{"order"}, new int[]{R.id.iv_order});
              mCenterUserOrderLis.setAdapter(adapter);
         }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        user = FuLiCenterApplication.getUser();
+        L.e(TAG, "user=" + user);
+        if (user != null) {
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
+            mTvUserName.setText(user.getMuserNick());
+        }
+    }
 }

@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
-
+    private static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.layout_new_good)
     RadioButton mLayoutNewGood;
     @BindView(R.id.layout_boutique)
@@ -144,11 +144,11 @@ public class MainActivity extends BaseActivity {
         finish();
     }
     @Override
-    public void onResume(){
+    protected void onResume() {
         super.onResume();
-        if (FuLiCenterApplication.getUser()!=null
-                && ){
-            index=4;
+        L.e(TAG, "onResume...");
+        if (index == 4 && FuLiCenterApplication.getUser() == null) {
+            index = 0;
         }
         setFragment();
     }

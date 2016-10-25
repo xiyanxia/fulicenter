@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.sty.FuLiCenterApplication;
-import com.example.sty.R;
 import com.example.sty.I;
-
+import com.example.sty.R;
 import com.example.sty.bean.Result;
 import com.example.sty.bean.User;
 import com.example.sty.dao.SharePrefrenceUtils;
@@ -21,6 +20,7 @@ import com.example.sty.utils.CommonUtils;
 import com.example.sty.utils.L;
 import com.example.sty.utils.MFGT;
 import com.example.sty.utils.ResultUtils;
+import com.example.sty.view.DisplayUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        DisplayUtils.initBackWithTitle(mContext, getResources().getString(R.string.login));
     }
 
     @Override
