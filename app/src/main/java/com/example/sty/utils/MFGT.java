@@ -12,6 +12,7 @@ import com.example.sty.activity.GoodsDetailActivity;
 import com.example.sty.activity.LoginActivity;
 import com.example.sty.activity.MainActivity;
 import com.example.sty.activity.RegisterActivity;
+import com.example.sty.activity.UpdateNickActivity;
 import com.example.sty.activity.UserProfileActivity;
 import com.example.sty.bean.BoutiqueBean;
 import com.example.sty.bean.CategoryChildBean;
@@ -82,7 +83,9 @@ public class MFGT {
         startActivity(context, UserProfileActivity.class);
     }
 
-
+    public static void gotoUpdateNick(Activity context) {
+        startActivityForResult(context, new Intent(context, UpdateNickActivity.class), I.REQUEST_CODE_NICK);
+    }
 
 }
 
