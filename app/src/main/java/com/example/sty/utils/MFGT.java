@@ -12,6 +12,7 @@ import com.example.sty.activity.GoodsDetailActivity;
 import com.example.sty.activity.LoginActivity;
 import com.example.sty.activity.MainActivity;
 import com.example.sty.activity.RegisterActivity;
+import com.example.sty.activity.UserProfileActivity;
 import com.example.sty.bean.BoutiqueBean;
 import com.example.sty.bean.CategoryChildBean;
 
@@ -72,9 +73,15 @@ public class MFGT {
         context.startActivityForResult(intent,requestCode);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
-public static void gotoLogin(Activity context){
+
+    public static void gotoLogin(Activity context) {
     startActivity(context, LoginActivity.class);
 }
+
+    public static void gotoSettings(Activity context) {
+        startActivity(context, UserProfileActivity.class);
+    }
+
 
 
 }
