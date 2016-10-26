@@ -6,6 +6,7 @@ import com.example.sty.I;
 import com.example.sty.bean.BoutiqueBean;
 import com.example.sty.bean.CategoryChildBean;
 import com.example.sty.bean.CategoryGroupBean;
+import com.example.sty.bean.CollectBean;
 import com.example.sty.bean.GoodsDetailsBean;
 import com.example.sty.bean.MessageBean;
 import com.example.sty.bean.NewGoodsBean;
@@ -122,6 +123,16 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
                 .addParam(I.Collect.USER_NAME, username)
                 .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    public static void downloadCollects(Context context, String username, int pageId, OkHttpUtils.OnCompleteListener<CollectBean[]> listener) {
+        OkHttpUtils<CollectBean[]> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECTS)
+                .addParam(I.Collect.USER_NAME, username)
+                .addParam(I.PAGE_ID, String.valueOf(pageId))
+                .addParam(I.PAGE_SIZE, String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(CollectBean[].class)
                 .execute(listener);
     }
 
