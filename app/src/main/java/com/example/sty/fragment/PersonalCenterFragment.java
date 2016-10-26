@@ -13,10 +13,15 @@ import android.widget.TextView;
 import com.example.sty.FuLiCenterApplication;
 import com.example.sty.R;
 import com.example.sty.activity.MainActivity;
+import com.example.sty.bean.Result;
 import com.example.sty.bean.User;
+import com.example.sty.dao.UserDao;
+import com.example.sty.net.NetDao;
+import com.example.sty.net.OkHttpUtils;
 import com.example.sty.utils.ImageLoader;
 import com.example.sty.utils.L;
 import com.example.sty.utils.MFGT;
+import com.example.sty.utils.ResultUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,10 +81,10 @@ public class PersonalCenterFragment extends BaseFragment {
 
     @OnClick(R.id.tv_center_settings)
         public void onClick() {
-        @OnClick({R.id.tv_center_settings, R.id.center_user_info})
-        public void gotoSettings () {
-            MFGT.gotoSettings(mContext);
-        }
+//        @OnClick({R.id.tv_center_settings,R.id.center_user_info})
+//        public void gotoSettings(){
+//            MFGT.gotoSettings(mContext);
+//        }
     }
     private void initOrderList() {
                 ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
@@ -111,6 +116,35 @@ public class PersonalCenterFragment extends BaseFragment {
         if (user != null) {
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
             mTvUserName.setText(user.getMuserNick());
+            syncUserInfo();
         }
+
+    }
+
+    private void syncUserInfo() {
+        NetDao.syncUserInfo(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Result result = ResultUtils.getResultFromJson(s, User.class);
+                if (result != null) {
+                    User u = (User) result.getRetData();
+                    if (!user.equals(u)) {
+                        UserDao dao = new UserDao(mContext);
+                        boolean b = dao.saveUser(u);
+                        if (b) {
+                            FuLiCenterApplication.setUser(u);
+                            user = u;
+                            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
+                            mTvUserName.setText(user.getMuserNick());
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 }
