@@ -7,6 +7,7 @@ import com.example.sty.bean.BoutiqueBean;
 import com.example.sty.bean.CategoryChildBean;
 import com.example.sty.bean.CategoryGroupBean;
 import com.example.sty.bean.GoodsDetailsBean;
+import com.example.sty.bean.MessageBean;
 import com.example.sty.bean.NewGoodsBean;
 import com.example.sty.bean.Result;
 import com.example.sty.utils.MD5;
@@ -113,6 +114,14 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_FIND_USER)
                 .addParam(I.User.USER_NAME, username)
                 .targetClass(String.class)
+                .execute(listener);
+    }
+
+    public static void getCollectsCount(Context context, String username, OkHttpUtils.OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.Collect.USER_NAME, username)
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
 

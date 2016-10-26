@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.sty.FuLiCenterApplication;
 import com.example.sty.R;
 import com.example.sty.activity.MainActivity;
+import com.example.sty.bean.MessageBean;
 import com.example.sty.bean.Result;
 import com.example.sty.bean.User;
 import com.example.sty.dao.UserDao;
@@ -40,6 +41,8 @@ public class PersonalCenterFragment extends BaseFragment {
     ImageView mIvUserAvatar;
     @BindView(R.id.tv_user_name)
     TextView mTvUserName;
+    @BindView(R.id.tv_collect_count)
+    TextView mTvCollectCount;
 
     MainActivity mContext;
     User user = null;
@@ -82,6 +85,7 @@ public class PersonalCenterFragment extends BaseFragment {
     @OnClick(R.id.tv_center_settings)
         public void onClick() {
 //        @OnClick({R.id.tv_center_settings,R.id.center_user_info})
+//        @OnClick({R.id.tv_center_settings, R.id.center_user_info})
 //        public void gotoSettings(){
 //            MFGT.gotoSettings(mContext);
 //        }
@@ -117,8 +121,28 @@ public class PersonalCenterFragment extends BaseFragment {
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, mIvUserAvatar);
             mTvUserName.setText(user.getMuserNick());
             syncUserInfo();
+            syncCollectsCount();
         }
 
+    }
+
+    private void syncCollectsCount() {
+        NetDao.getCollectsCount(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result != null && result.isSuccess()) {
+                    mTvCollectCount.setText(result.getMsg());
+                } else {
+                    mTvCollectCount.setText(String.valueOf(0));
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                mTvCollectCount.setText(String.valueOf(0));
+                L.e(TAG, "error=" + error);
+            }
+        });
     }
 
     private void syncUserInfo() {
