@@ -1,5 +1,9 @@
 package com.example.sty.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -39,6 +43,7 @@ public class CollectsActivity extends BaseActivity {
     int pageId = 1;
     GridLayoutManager glm;
     User user = null;
+    updateCollectReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,8 @@ public class CollectsActivity extends BaseActivity {
     protected void setListener() {
         setPullUpListener();
         setPullDownListener();
+        IntentFilter filter = new IntentFilter("update_collect");
+        registerReceiver(mReceiver, filter);
     }
 
     private void setPullDownListener() {
@@ -149,9 +156,23 @@ public class CollectsActivity extends BaseActivity {
         downloadCollects(I.ACTION_DOWNLOAD);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initData();
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mReceiver != null) {
+            unregisterReceiver(mReceiver);
+        }
+    }
+
+    class updateCollectReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int goodsId = intent.getIntExtra(I.Collect.GOODS_ID, 0);
+            if (goodsId != 0) {
+                CollectBean bean = new CollectBean();
+                bean.setGoodsId(goodsId);
+                mAdapter.remove(bean);
+                L.e("delete..." + goodsId);
+            }
+        }
     }
 }

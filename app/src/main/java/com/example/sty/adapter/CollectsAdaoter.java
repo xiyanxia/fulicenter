@@ -31,10 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-/**
- * Created by 涛 on 2016/10/26.
- */
-
 public class CollectsAdaoter extends Adapter {
     Context mContext;
     List<CollectBean> mList;
@@ -112,6 +108,11 @@ public class CollectsAdaoter extends Adapter {
         notifyDataSetChanged();
     }
 
+    public void remove(CollectBean bean) {
+        mList.remove(bean);
+        notifyDataSetChanged();
+    }
+
     public void addData(ArrayList<CollectBean> list) {
         mList.addAll(list);
         notifyDataSetChanged();
@@ -164,4 +165,5 @@ public class CollectsAdaoter extends Adapter {
             });
         }
     }
+
 }
