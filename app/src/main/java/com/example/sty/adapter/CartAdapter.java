@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.sty.R;
 import com.example.sty.bean.CartBean;
+import com.example.sty.bean.GoodsDetailsBean;
+import com.example.sty.utils.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -46,6 +48,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         //        holder.mTvBoutiqueName.setText(boutiqueBean.getName());
         //        holder.mTvBoutiqueDescription.setText(boutiqueBean.getDescription());
         //        holder.mLayoutBoutiqueItem.setTag(boutiqueBean);
+        GoodsDetailsBean goods = cartBean.getGoods();
+        if (goods != null) {
+            ImageLoader.downloadImg(mContext, holder.mIvCartThumb, goods.getGoodsThumb());
+            holder.mTvCartGoodName.setText(goods.getGoodsName());
+            holder.mTvCartPrice.setText(goods.getCurrencyPrice());
+        }
+        holder.mTvCartCount.setText("(" + cartBean.getCount() + ")");
+        holder.mCbCartSelected.setChecked(false);
+
     }
 
     @Override
