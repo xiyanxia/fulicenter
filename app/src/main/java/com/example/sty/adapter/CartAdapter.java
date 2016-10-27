@@ -5,14 +5,17 @@ package com.example.sty.adapter;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sty.I;
 import com.example.sty.R;
 import com.example.sty.bean.CartBean;
 import com.example.sty.bean.GoodsDetailsBean;
@@ -29,8 +32,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public CartAdapter(Context context, ArrayList<CartBean> list) {
         mContext = context;
-        mList = new ArrayList<>();
-        mList.addAll(list);
+//        mList = new ArrayList<>();
+//        mList.addAll(list);
+        mList = list;
     }
 
     @Override
@@ -42,17 +46,25 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(CartViewHolder holder, int position) {
-        CartBean cartBean = mList.get(position);
+        //CartBean cartBean = mList.get(position);
         //        ImageLoader.downloadImg(mContext,holder.mIvBoutiqueImg,boutiqueBean.getImageurl());
         //        holder.mTvBoutiqueTitle.setText(boutiqueBean.getTitle());
         //        holder.mTvBoutiqueName.setText(boutiqueBean.getName());
         //        holder.mTvBoutiqueDescription.setText(boutiqueBean.getDescription());
         //        holder.mLayoutBoutiqueItem.setTag(boutiqueBean);
+        final CartBean cartBean = mList.get(position);
         GoodsDetailsBean goods = cartBean.getGoods();
         if (goods != null) {
             ImageLoader.downloadImg(mContext, holder.mIvCartThumb, goods.getGoodsThumb());
             holder.mTvCartGoodName.setText(goods.getGoodsName());
             holder.mTvCartPrice.setText(goods.getCurrencyPrice());
+            holder.mCbCartSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    cartBean.setChecked(b);
+                    mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                }
+            });
         }
         holder.mTvCartCount.setText("(" + cartBean.getCount() + ")");
         holder.mCbCartSelected.setChecked(false);
@@ -65,10 +77,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     public void initData(ArrayList<CartBean> list) {
-        if (mList != null) {
-            mList.clear();
-        }
-        mList.addAll(list);
+//
+        mList = list;
         notifyDataSetChanged();
     }
 
