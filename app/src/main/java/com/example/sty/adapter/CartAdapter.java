@@ -19,12 +19,16 @@ import com.example.sty.I;
 import com.example.sty.R;
 import com.example.sty.bean.CartBean;
 import com.example.sty.bean.GoodsDetailsBean;
+import com.example.sty.bean.MessageBean;
+import com.example.sty.net.NetDao;
+import com.example.sty.net.OkHttpUtils;
 import com.example.sty.utils.ImageLoader;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
     Context mContext;
@@ -57,7 +61,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         if (goods != null) {
             ImageLoader.downloadImg(mContext, holder.mIvCartThumb, goods.getGoodsThumb());
             holder.mTvCartGoodName.setText(goods.getGoodsName());
-            holder.mTvCartPrice.setText(goods.getCurrencyPrice());
+//            holder.mTvCartPrice.setText(goods.getCurrencyPrice());
+            holder.mCbCartSelected.setChecked(cartBean.isChecked());
             holder.mCbCartSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -65,6 +70,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                     mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
                 }
             });
+            holder.mIvCartAdd.setTag(position);
         }
         holder.mTvCartCount.setText("(" + cartBean.getCount() + ")");
         holder.mCbCartSelected.setChecked(false);
@@ -101,6 +107,63 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         CartViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.iv_cart_add)
+        public void addCart() {
+            final int position = (int) mIvCartAdd.getTag();
+            CartBean cart = mList.get(position);
+            NetDao.updateCart(mContext, cart.getId(), cart.getCount() + 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result != null && result.isSuccess()) {
+                        mList.get(position).setCount(mList.get(position).getCount() + 1);
+                        mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                        mTvCartCount.setText("(" + (mList.get(position).getCount()) + ")");
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                }
+            });
+        }
+
+        @OnClick(R.id.iv_cart_del)
+        public void delCart() {
+            final int position = (int) mIvCartAdd.getTag();
+            CartBean cart = mList.get(position);
+            if (cart.getCount() > 1) {
+                NetDao.updateCart(mContext, cart.getId(), cart.getCount() - 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            mList.get(position).setCount(mList.get(position).getCount() - 1);
+                            mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                            mTvCartCount.setText("(" + (mList.get(position).getCount()) + ")");
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                    }
+                });
+            } else {
+                NetDao.deleteCart(mContext, cart.getId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            mList.remove(position);
+                            mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATA_CART));
+                            notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                    }
+                });
+            }
         }
     }
 }
