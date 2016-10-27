@@ -11,6 +11,7 @@ import com.example.sty.FuLiCenterApplication;
 import com.example.sty.I;
 import com.example.sty.R;
 import com.example.sty.fragment.BoutiqueFragment;
+import com.example.sty.fragment.CartFragment;
 import com.example.sty.fragment.CategoryFragment;
 import com.example.sty.fragment.NewGoodsFragment;
 import com.example.sty.fragment.PersonalCenterFragment;
@@ -42,7 +43,7 @@ public class MainActivity extends BaseActivity {
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mcategoryFragment;
-    CartFragment mCartFragment
+    CartFragment mCartFragment;
     PersonalCenterFragment mPersonalCenterFragment;
 
 

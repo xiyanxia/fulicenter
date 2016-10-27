@@ -18,7 +18,6 @@ import com.example.sty.bean.User;
 import com.example.sty.net.NetDao;
 import com.example.sty.net.OkHttpUtils;
 import com.example.sty.utils.CommonUtils;
-import com.example.sty.utils.ConvertUtils;
 import com.example.sty.utils.L;
 import com.example.sty.utils.ResultUtils;
 import com.example.sty.view.SpaceItemDecoration;
@@ -27,6 +26,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by 涛 on 2016/10/27.
@@ -40,6 +40,14 @@ public class CartFragment extends BaseFragment {
     RecyclerView mRv;
     @BindView(R.id.srl)
     SwipeRefreshLayout mSrl;
+    @BindView(R.id.tv_cart_sum_price)
+    TextView mTvCartSumPrice;
+    @BindView(R.id.tv_cart_save_price)
+    TextView mTvCartSavePrice;
+    @BindView(R.id.layout_cart)
+    RelativeLayout mLayoutCart;
+    @BindView(R.id.tv_nothing)
+    TextView mTvNothing;
     LinearLayoutManager llm;
     MainActivity mContext;
     CartAdapter mAdapter;
@@ -48,10 +56,13 @@ public class CartFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
+//        View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
+        View layout = inflater.inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, layout);
         mContext = (MainActivity) getContext();
         mList = new ArrayList<>();
+//        mAdapter = new CartAdapter(mContext, mList);
+//        super.onCreateView(inflater, container, savedInstanceState);
         mAdapter = new CartAdapter(mContext, mList);
         super.onCreateView(inflater, container, savedInstanceState);
         return layout;
@@ -97,11 +108,15 @@ public class CartFragment extends BaseFragment {
                     if (list != null && list.size() > 0) {
                         L.e(TAG, "list[0]=" + list.get(0));
                         mAdapter.initData(list);
+                        setCartLayout(true);
+                    } else {
+                        setCartLayout(false);
                     }
                 }
 
                 @Override
                 public void onError(String error) {
+                    setCartLayout(false);
                     mSrl.setRefreshing(false);
                     mTvRefresh.setVisibility(View.GONE);
                     CommonUtils.showShortToast(error);
@@ -124,5 +139,17 @@ public class CartFragment extends BaseFragment {
         mRv.setHasFixedSize(true);
         mRv.setAdapter(mAdapter);
         mRv.addItemDecoration(new SpaceItemDecoration(12));
+        setCartLayout(false);
+    }
+
+    private void setCartLayout(boolean hasCart) {
+        mLayoutCart.setVisibility(hasCart ? View.VISIBLE : View.GONE);
+        mTvNothing.setVisibility(hasCart ? View.GONE : View.VISIBLE);
+        mRv.setVisibility(hasCart ? View.VISIBLE : View.GONE);
+    }
+
+    @OnClick(R.id.tv_cart_buy)
+    public void onClick() {
+    }
     }
 }
