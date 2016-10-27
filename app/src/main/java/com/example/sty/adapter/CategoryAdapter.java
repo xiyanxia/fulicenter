@@ -8,11 +8,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.winston.myapplication.R;
-import com.example.winston.myapplication.bean.CategoryChildBean;
-import com.example.winston.myapplication.bean.CategoryGroupBean;
-import com.example.winston.myapplication.utils.ImageLoader;
-import com.example.winston.myapplication.utils.MFGT;
+import com.example.sty.R;
+import com.example.sty.bean.CategoryChildBean;
+import com.example.sty.bean.CategoryGroupBean;
+import com.example.sty.utils.ImageLoader;
+import com.example.sty.utils.MFGT;
 
 import java.util.ArrayList;
 

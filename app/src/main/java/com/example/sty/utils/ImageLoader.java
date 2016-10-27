@@ -73,7 +73,7 @@ public class ImageLoader {
 
     public static String getAvatarUrl(User user) {
         if (user != null) {
-            String url = I.DOWMLOAD_AVATAR_URL + I.NAME_OR_HXID + "=" + user.getMuserName()
+            String url = I.DOWNLOAD_AVATAR_URL + I.NAME_OR_HXID + "=" + user.getMuserName()
                     + I.AND + I.AVATAR_TYPE + "=" + user.getMavatarType()
                     + I.AND + I.AVATAR_SUFFIX + "=" + user.getMavatarSuffix()
                     + I.AND + "width=20&height=200";
@@ -120,7 +120,7 @@ public class ImageLoader {
 
     public static String getAvatar(User user) {
         if (user != null) {
-            String url = I.DOWMLOAD_AVATAR_URL + I.NAME_OR_HXID + "=" + user.getMuserName()
+            String url = I.DOWNLOAD_AVATAR_URL + I.NAME_OR_HXID + "=" + user.getMuserName()
                     + I.AND + I.AVATAR_TYPE + "=" + user.getMavatarType()
                     + I.AND + I.AVATAR_SUFFIX + "=" + user.getMavatarSuffix()
                     + I.AND + "width=20&height=200";

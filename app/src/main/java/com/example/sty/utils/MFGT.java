@@ -8,6 +8,7 @@ import com.example.sty.I;
 import com.example.sty.R;
 import com.example.sty.activity.BoutiqueChildActivity;
 import com.example.sty.activity.CategoryChildActivity;
+import com.example.sty.activity.CollectsActivity;
 import com.example.sty.activity.GoodsDetailActivity;
 import com.example.sty.activity.LoginActivity;
 import com.example.sty.activity.MainActivity;
@@ -85,6 +86,10 @@ public class MFGT {
 
     public static void gotoUpdateNick(Activity context) {
         startActivityForResult(context, new Intent(context, UpdateNickActivity.class), I.REQUEST_CODE_NICK);
+    }
+
+    public static void gotoCollects(Activity context) {
+        startActivity(context, CollectsActivity.class);
     }
 
 }

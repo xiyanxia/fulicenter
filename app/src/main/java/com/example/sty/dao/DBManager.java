@@ -11,11 +11,12 @@ public class DBManager {
     private static DBManager dbManager =new DBManager();
     private DBOpenHelper dbHelper;
 
-    void onInit(Context context){
-        dbHelper=new DBOpenHelper(context);
-    }
     public static synchronized DBManager getDbManager(){
         return dbManager;
+    }
+
+    void onInit(Context context) {
+        dbHelper = new DBOpenHelper(context);
     }
 
     public synchronized void closeDB(){
@@ -41,7 +42,7 @@ public class DBManager {
 
     public synchronized User getUser(String username){
         SQLiteDatabase db=dbHelper.getReadableDatabase();
-        String sql="select * from "+ UserDao.USER_TABLE_NAME
+        String sql = " select * from " + UserDao.USER_TABLE_NAME
                 + " where " + UserDao.USER_COLUMN_NAME +" =?";
         User user=null;
         Cursor cursor=db.rawQuery(sql,new String[]{username});

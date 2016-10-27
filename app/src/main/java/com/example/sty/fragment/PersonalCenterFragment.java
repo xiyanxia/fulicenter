@@ -90,6 +90,12 @@ public class PersonalCenterFragment extends BaseFragment {
 //            MFGT.gotoSettings(mContext);
 //        }
     }
+
+    @OnClick(R.id.layout_center_collect)
+    public void gotoCollectsList() {
+        MFGT.gotoCollects(mContext);
+    }
+
     private void initOrderList() {
                 ArrayList<HashMap<String, Object>> data = new ArrayList<HashMap<String, Object>>();
                 HashMap<String, Object> order1 = new HashMap<String, Object>();

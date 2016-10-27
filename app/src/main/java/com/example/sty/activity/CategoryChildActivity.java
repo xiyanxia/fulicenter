@@ -12,19 +12,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.winston.myapplication.I;
-import com.example.winston.myapplication.R;
-import com.example.winston.myapplication.adapter.GoodsAdapter;
-import com.example.winston.myapplication.bean.CategoryChildBean;
-import com.example.winston.myapplication.bean.NewGoodsBean;
-import com.example.winston.myapplication.net.NetDao;
-import com.example.winston.myapplication.net.OkHttpUtils;
-import com.example.winston.myapplication.utils.CommonUtils;
-import com.example.winston.myapplication.utils.ConvertUtils;
-import com.example.winston.myapplication.utils.L;
-import com.example.winston.myapplication.utils.MFGT;
-import com.example.winston.myapplication.view.CatChildFilterButton;
-import com.example.winston.myapplication.view.SpaceItemDecoration;
+import com.example.sty.I;
+import com.example.sty.R;
+import com.example.sty.adapter.GoodsAdapter;
+import com.example.sty.bean.CategoryChildBean;
+import com.example.sty.bean.NewGoodsBean;
+import com.example.sty.net.NetDao;
+import com.example.sty.net.OkHttpUtils;
+import com.example.sty.utils.CommonUtils;
+import com.example.sty.utils.ConvertUtils;
+import com.example.sty.utils.L;
+import com.example.sty.utils.MFGT;
+import com.example.sty.view.CatChildFilterButton;
+import com.example.sty.view.SpaceItemDecoration;
 
 import java.util.ArrayList;
 

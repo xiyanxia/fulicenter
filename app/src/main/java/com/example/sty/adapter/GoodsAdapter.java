@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.winston.myapplication.I;
-import com.example.winston.myapplication.R;
-import com.example.winston.myapplication.bean.NewGoodsBean;
-import com.example.winston.myapplication.utils.ImageLoader;
-import com.example.winston.myapplication.utils.MFGT;
-import com.example.winston.myapplication.view.FooterViewHolder;
+import com.example.sty.I;
+import com.example.sty.R;
+import com.example.sty.bean.NewGoodsBean;
+import com.example.sty.utils.ImageLoader;
+import com.example.sty.utils.MFGT;
+import com.example.sty.view.FooterViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +33,7 @@ public class GoodsAdapter extends Adapter {
     Context mContext;
     List<NewGoodsBean> mList;
     boolean isMore;
-    int sortBy=I.SORT_BY_ADDTIME_DESC;
+    int sortBy = I.SORT_BY_ADDTIME_DESC;
 
     public GoodsAdapter(Context context, List<NewGoodsBean> list) {
         mContext = context;
@@ -112,27 +112,6 @@ public class GoodsAdapter extends Adapter {
         notifyDataSetChanged();
     }
 
-    class GoodsViewHolder extends ViewHolder{
-        @BindView(R.id.ivGoodsThumb)
-        ImageView mIvGoodsThumb;
-        @BindView(R.id.tvGoodsName)
-        TextView mTvGoodsName;
-        @BindView(R.id.tvGoodsPrice)
-        TextView mTvGoodsPrice;
-        @BindView(R.id.layout_goods)
-        LinearLayout mLayoutGoods;
-
-        GoodsViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-        @OnClick(R.id.layout_goods)
-        public void onGoodsItemClick(){
-            int goodsId = (int) mLayoutGoods.getTag();
-            MFGT.gotoGoodsDetailsActivity(mContext,goodsId);
-        }
-    }
-
     private void sortBy(){
         Collections.sort(mList, new Comparator<NewGoodsBean>() {
             @Override
@@ -159,5 +138,27 @@ public class GoodsAdapter extends Adapter {
                 return Integer.valueOf(price);
             }
         });
+    }
+
+    class GoodsViewHolder extends ViewHolder {
+        @BindView(R.id.ivGoodsThumb)
+        ImageView mIvGoodsThumb;
+        @BindView(R.id.tvGoodsName)
+        TextView mTvGoodsName;
+        @BindView(R.id.tvGoodsPrice)
+        TextView mTvGoodsPrice;
+        @BindView(R.id.layout_goods)
+        LinearLayout mLayoutGoods;
+
+        GoodsViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.layout_goods)
+        public void onGoodsItemClick() {
+            int goodsId = (int) mLayoutGoods.getTag();
+            MFGT.gotoGoodsDetailsActivity(mContext, goodsId);
+        }
     }
 }
