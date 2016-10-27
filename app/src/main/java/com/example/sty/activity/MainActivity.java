@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.sty.FuLiCenterApplication;
+import com.example.sty.I;
 import com.example.sty.R;
 import com.example.sty.fragment.BoutiqueFragment;
 import com.example.sty.fragment.CategoryFragment;
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity {
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mcategoryFragment;
+    CartFragment mCartFragment
     PersonalCenterFragment mPersonalCenterFragment;
 
 
@@ -57,10 +59,12 @@ public class MainActivity extends BaseActivity {
         mNewGoodsFragment = new NewGoodsFragment();
         mBoutiqueFragment = new BoutiqueFragment();
         mcategoryFragment=new CategoryFragment();
+        mCartFragment = new CartFragment();
         mPersonalCenterFragment=new PersonalCenterFragment();
         mFragments[0] = mNewGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
         mFragments[2]=mcategoryFragment;
+        mFragments[3] = mCartFragment;
         mFragments[4]=mPersonalCenterFragment;
         getSupportFragmentManager()
                 .beginTransaction()
@@ -105,8 +109,11 @@ public class MainActivity extends BaseActivity {
                 index = 2;
                 break;
             case R.id.layout_cart:
-                index = 3;
-                break;
+                if (FuLiCenterApplication.getUser() == null) {
+                    MFGT.gotoLoginFromCart(this);
+                } else {
+                    index = 3;
+                }
             case R.id.layout_personal_center:
                 if (FuLiCenterApplication.getUser()==null) {
                     MFGT.gotoLogin(this);
@@ -147,8 +154,15 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         L.e(TAG, "onResume...");
-        if (index == 4 && FuLiCenterApplication.getUser() == null) {
-            index = 0;
+//        if (index == 4 && FuLiCenterApplication.getUser() == null) {
+//            index = 0;
+        if (FuLiCenterApplication.getUser() != null) {
+            if (requestCode == I.REQUEST_CODE_LOGIN) {
+                index = 4;
+            }
+            if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART) {
+                index = 3;
+            }
         }
         setFragment();
     }
